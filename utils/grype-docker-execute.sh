@@ -62,8 +62,8 @@ do
   # debug_show_tree ${scan_path} ${REPORT_PATH}
   echo -e "\n>>>>>> Begin Grype output for ${scan_path} >>>>>>\n" >> ${REPORT_PATH}
 
-  debug_echo "grype dir:${scan_path} --fail-on medium --exclude=\"**/*-converted.py\" --exclude=\"**/*_report_result.txt\""
-  grype dir:${scan_path} --fail-on medium --exclude="**/*-converted.py" --exclude="**/*_report_result.txt" >> ${REPORT_PATH} 2>&1
+  debug_echo "grype dir:${scan_path} --fail-on medium -vv --exclude=\"**/*-converted.py\" --exclude=\"**/*_report_result.txt\""
+  grype dir:${scan_path} --fail-on medium -vv --exclude="**/*-converted.py" --exclude="**/*_report_result.txt" >> ${REPORT_PATH} 2>&1
 
   echo "GRYPE JAR files (START)"
   find ${scan_path} -type f -name "*.jar"
