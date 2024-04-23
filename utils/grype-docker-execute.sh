@@ -62,11 +62,11 @@ do
   # debug_show_tree ${scan_path} ${REPORT_PATH}
   echo -e "\n>>>>>> Begin Grype output for ${scan_path} >>>>>>\n" >> ${REPORT_PATH}
 
-  echo "grype -f medium dir:${scan_path} --exclude=\"**/*-converted.py\" --exclude=\"**/*_report_result.txt\""
-  grype -f medium dir:${scan_path} --exclude="**/*-converted.py" --exclude="**/*_report_result.txt" >> ${REPORT_PATH} 2>&1
+  debug_echo "grype dir:${scan_path} --fail-on medium --exclude=\"**/*-converted.py\" --exclude=\"**/*_report_result.txt\""
+  grype dir:${scan_path} --fail-on medium --exclude="**/*-converted.py" --exclude="**/*_report_result.txt" >> ${REPORT_PATH} 2>&1
 
   echo "GRYPE JAR files (START)"
-  find ${scan_path} -name "*.jar"
+  find ${scan_path} -type f -name "*.jar"
   echo "GRYPE JAR files (END)"
 
   SRC=$?
@@ -89,6 +89,11 @@ do
 
   debug_echo "syft ${scan_path} --exclude=\"**/*-converted.py\" --exclude=\"**/*_report_result.txt\""
   syft ${scan_path} --exclude="**/*-converted.py" --exclude="**/*_report_result.txt" >> ${REPORT_PATH} 2>&1
+
+  echo "SYFT files (START)"
+  find ${scan_path} -type f
+  echo "SYFT files (END)"
+
   SRC=$?
   RC=$(bumprc $RC $SRC)
 
